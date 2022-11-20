@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+   <head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+ 
+  </head>
+  <body>
+    {% load crispy_forms_tags %}
+    
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand mx-auto" href="/">
+        Contacts Database
+      </a>
+      <a class="navbar-brand mx-auto" href="searchPage">
+        Search Database
+      </a>
+      <a class="navbar-brand mx-auto" href="comparePage">
+        Compare Contacts
+      </a>
+    </nav>
+    <br><br>
+    <h1 class = "text-center">
+      Compare Contacts
+      <hr>
+    </h1>
+    <div class="container text-center mb-4">
+      <form method="POST" action="compare" >
+          
+          <label for="search1"> Enter name of contact 1: </label><br>
+          <div class="row ">
+              <p class="col-1"></p>
+              {% csrf_token %}
+              <input class="col-9 form-control " type="search" name="search1" id="search1" placeholder="Search..">
+              
+          </div>
+      
+          
+          <label for="search2"> Enter name of contact 2: </label><br>
+          <div class="row ">
+              <p class="col-1"></p>
+              {% csrf_token %}
+              <input class="col-9 form-control " type="search" name="search2" id="search2" placeholder="Search..">
+          </div>
+          <button class ="col-1 btn btn-secondary " type="submit">Compare</button><br>
+      </form>
+      
+      
+      
+    </div>
+    <br><br>
+    <div class="container text-center row" center>
+      <div class="col"> </div>
+      <div class="card col" style="width: 18rem;">
+          <div class="card-body">
+            {% for contact in contacts %}
+      
+            <h5 class="card-title">{{ contact.name }}</h5>
+            
+            {% endfor %}  
+      </div>
+    </div>
+    {% block content %}
+      <div class="col">
+        {% csrf_token %}
+        {% for person1 in person1 %}
+        {% for person2 in person2 %}
+        {% if person1 %}
+        <div class="card col" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">{{ person1.name }}</h5>
+            <h5 class="card-title">{{ person1.profession }}</h5>
+            <h5 class="card-title">{{ person1.telephone1 }}</h5>
+            <h5 class="card-title">{{ person1.telephone2 }}</h5>
+          </div>
+        </div>
+        {% if person2 %}
+        <div class="card col" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">{{ person2.name }}</h5>
+            <h5 class="card-title">{{ person2.profession }}</h5>
+            <h5 class="card-title">{{ person2.telephone1 }}</h5>
+            <h5 class="card-title">{{ person2.telephone2 }}</h5>
+          </div>
+          </div>
+          
+          {% endif %}
+          {% endif %}
+          
+    </div>
+
+    <div class="col">
+      {% if person1.profession == person2.profession %} 
+      {% if person1.telephone1 == person2.telephone1 %} 
+      {% if person1.telephone2 == person2.telephone2 %} 
+      <h2> True </h2>
+      {% else %}
+      <h2> False</h2>
+      {% endif %}
+      {% else %}
+      <h2> False</h2>
+      {% endif %}
+      {% else %}
+      <h2> False</h2>
+      {% endif %}
+      
+    </div>
+  </div>
+              
+  {% endfor %}
+  {% endfor %}
+
+  {% endblock %}
+  </body>
+</html>

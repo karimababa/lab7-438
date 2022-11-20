@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--Bootstrap CSS-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    </head>
+    <body>
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand mx-auto" href="/">
+              Contacts Database
+            </a>
+            <a class="navbar-brand mx-auto" href="searchPage">
+              Search Database
+            </a>
+            <a class="navbar-brand mx-auto" href="comparePage">
+              Compare Contacts
+            </a>
+          </nav>
+          <br><br>
+          <h1 class = "text-center">
+            Delete Contact
+            <hr>
+          </h1>
+          <div class="container">
+            {% csrf_token %}
+            <h5>
+              Name: {{contact.name}} <br>
+              Profession: {{ contact.profession }} <br>
+              Telephone1: {{ contact.telephone1 }} <br>
+              Telephone2: {{ contact.telephone2 }} <br>
+            </h5>
+          </div>
+          <br><br>
+          
+        <div class="container">
+            Are you sure you want to delete this contact?
+            <form method="post">
+              {% csrf_token %}
+              
+              <br>
+              
+              <button center class ="btn btn-primary " type="submit" id= "delete">Delete</button> 
+            </form>
+            <br>
+            <a href="/" class="col-1"><button center class ="btn btn-primary" id= "cancel">Cancel</button></a>
+        </div>
+    </body>
+</html>

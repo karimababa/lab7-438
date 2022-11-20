@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+   <head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+ 
+  </head>
+  <body>
+      {% load crispy_forms_tags %}
+      
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand mx-auto" href="/">
+          Contacts Database
+        </a>
+        <a class="navbar-brand mx-auto" href="searchPage">
+          Search Database
+        </a>
+        <a class="navbar-brand mx-auto" href="comparePage">
+          Compare Contacts
+        </a>
+      </nav>
+      <br><br>
+      <h1 class = "text-center">
+        Search for Contacts
+        <hr>
+      </h1>
+      <div class="container text-center mb-4">
+        Search By: <input type="radio" id="name" name="radio"> 
+        <label for="name">Name </label>
+        <input type="radio" id="telephone" name="radio"> 
+        <label for="telephone">Telephone Number </label>
+        <input type="radio" id="profession" name="radio"> 
+        <label for="profession">Profession </label>
+        <button type="button" class=" col-1 btn btn-secondary tn-sm" onclick="apply()"> Apply </button>
+        <a href="searchPage"> <button type="button" class=" col-1 btn btn-primary" > Reset </button></a>
+    </div>
+    
+      <div class="container text-center mb-4">
+        <form method="POST" action="searchN" id="byname" hidden>
+            {% csrf_token %}
+            <label for="search"> Search By Name: </label><br>
+            <div class="row ">
+                <p class="col-1"></p>
+                <input class="col-9 form-control " type="search" name="search" id="search" placeholder="Search..">
+                <button class ="col-1 btn btn-secondary " type="submit">Search</button><br>
+            </div>
+        </form>
+        <form method="POST" action="searchT" id="bytelephone" hidden>
+            {% csrf_token %}
+            <label for="search"> Search By Telephone Number: </label><br>
+            <div class="row ">
+                <p class="col-1"></p>
+                <input class="col-9 form-control " type="text" name="search" id="search" placeholder="Search..">
+                <button class ="col-1 btn btn-secondary " type="submit">Search</button><br>
+            </div>
+        </form>
+        <form method="POST" action="searchP" id = "byprofession" hidden>
+            {% csrf_token %}
+            <label for="search"> Search By Profession: </label><br>
+            <div class="row ">
+                <p class="col-1"></p>
+                <input class="col-9 form-control " type="text" name="search" id="search" placeholder="Search..">
+                <button class ="col-1 btn btn-secondary " type="submit">Search</button><br>
+            </div>
+        </form>
+        
+        
+      </div>
+      <br><br>
+      <div class="container text-center">
+        {% for contact in contacts %}
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">{{ contact.name }}</h5>
+            <p class="card-text">{{ contact.profession }}</p>
+            <p class="card-text">{{ contact.telephone1 }}</p>
+            <p class="card-text">{{ contact.telephone2 }}</p>
+            
+            <a href="delete/{{contact.id}}"><button class ="btn btn-primary" type="button">Delete</button></a>
+            <a href="updatePage/{{contact.id}}"><button class ="btn btn-primary" type="button">Update</button></a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <script>
+        function apply(){
+            if (document.getElementById("name").checked){
+                document.getElementById("byname").hidden=false;
+                document.getElementById("byprofession").hidden=true;
+                document.getElementById("bytelephone").hidden=true;
+            }
+            if (document.getElementById("telephone").checked){
+                document.getElementById("byname").hidden=true;
+                document.getElementById("byprofession").hidden=true;
+                document.getElementById("bytelephone").hidden=false;
+            }
+            if (document.getElementById("profession").checked){
+                document.getElementById("byname").hidden=true;
+                document.getElementById("byprofession").hidden=false;
+                document.getElementById("bytelephone").hidden=true;
+            }
+        }
+      </script>
+  </body>
+</html>

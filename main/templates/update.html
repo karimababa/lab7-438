@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+   <head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+ 
+  </head>
+  <body>
+    {% load crispy_forms_tags %}
+
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand mx-auto" href="/">
+          Contacts Database
+        </a>
+        <a class="navbar-brand mx-auto" href="searchPage">
+          Search Database
+        </a>
+        <a class="navbar-brand mx-auto" href="comparePage">
+          Compare Contacts
+        </a>
+      </nav>
+      <br><br>
+
+      <div class="container">
+        {% csrf_token %}
+        <h5>
+          Name: {{contact.name}} <br>
+          Profession: {{ contact.profession }} <br>
+          Telephone1: {{ contact.telephone1 }} <br>
+          Telephone2: {{ contact.telephone2 }} <br>
+        </h5>
+      </div>
+      <br><br>
+      <form action="update/{{contact.id}}" method="post">
+        {% csrf_token %}
+        Name: <input name="name" id="name" >
+        <br>
+        Profession: <input name="profession" id="profession">
+        <br>
+        Telephone1: <input name="telephone1" id="telephone1">
+        <br>
+        Telephone2: <input name="telephone2" id="telephone2">
+        <br>
+        <input type="submit" value="Submit">
+      </form>
+      
+  </body>
+</html>
